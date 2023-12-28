@@ -1,0 +1,25 @@
+RewriteEngine On
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://www.kravmagaperigueux.org/ovh/$1 [R,L]
+ # SET CSP HEADER
+2. <IfModule mod_headers.c>
+3.     Header set Content-Security-Policy "upgrade-insecure-requests"
+4. </IfModule>
+
+. # REDIRECTION TO HTTPS
+2. # https://wiki.apache.org/httpd/RewriteHTTPToHTTPS
+3. RewriteEngine On
+4. RewriteCond %{HTTPS} !=on
+5. RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
+ # HSTS HEADER
+2. # Recommanded value: 15778800 (half a year)
+3. # Public deployment: https://hstspreload.appspot.com/
+4. Header always set Strict-Transport-Security "max-age=60"
+1. # HSTS HEADER
+2. # Recommanded value: 15778800 (half a year)
+3. # Public deployment: https://hstspreload.appspot.com/
+4. Header always set Strict-Transport-Security "max-age=60; includeSubDomains"
+. # HSTS HEADER
+2. # Recommanded value: 15778800 (half a year)
+3. # Public deployment: https://hstspreload.appspot.com/
+4. Header always set Strict-Transport-Security "max-age=31557600; includeSubDomains; preload"
